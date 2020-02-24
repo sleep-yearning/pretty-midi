@@ -74,7 +74,7 @@ class Instrument(object):
         return np.sort(onsets)
 
     def get_piano_roll(self, fs=100, times=None,
-                       pedal_threshold=64):
+                       pedal_threshold=64,include_drums=False):
         """Compute a piano roll matrix of this instrument.
 
         Parameters
@@ -109,7 +109,7 @@ class Instrument(object):
         # Allocate a matrix of zeros - we will add in as we go
         piano_roll = np.zeros((128, int(fs*end_time)))
         # Drum tracks don't have pitch, so return a matrix of zeros
-        if self.is_drum:
+        if self.is_drum and not include_drums:
             if times is None:
                 return piano_roll
             else:
